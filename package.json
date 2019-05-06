@@ -1,0 +1,40 @@
+{
+  "name": "react-starter-mlk",
+  "version": "0.0.1",
+  "description": "React starter with Parcel, GraphQL Apollo client",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "parcel": "cross-env NODE_ENV=development parcel index.html ",
+    "build": "cross-env NODE_ENV=production parcel build index.html --no-minify --public-url /"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evanx/react-starter-mlk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evanx/react-starter-mlk/issues"
+  },
+  "homepage": "https://github.com/evanx/react-starter-mlk#readme",
+  "devDependencies": {
+    "jest": "^24.8.0",
+    "parcel-bundler": "^1.12.3"
+  },
+  "dependencies": {
+    "apollo-client": "^2.5.1",
+    "apollo-link-context": "^1.0.17",
+    "apollo-link-ws": "^1.0.17",
+    "cross-env": "^5.2.0",
+    "graphql": "^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0",
+    "graphql-tag": "^2.10.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-apollo": "^2.5.5",
+    "react-apollo-hooks": "^0.4.5",
+    "react-dom": "^16.8.6",
+    "subscriptions-transport-ws": "^0.9.16"
+  }
+}
