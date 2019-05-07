@@ -12,13 +12,16 @@ import {
 import ApolloClient from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { WebSocketLink } from 'apollo-link-ws'
+import { SchemaLink } from 'apollo-link-schema'
 import { SubscriptionClient } from 'subscriptions-transport-ws'
 import { setContext } from 'apollo-link-context'
 import './index.css'
 import { classNames } from './utils'
 import environment from './environment'
+import { schema } from './schema'
 
 const client = new ApolloClient({
+  link: new SchemaLink({ schema }),
   cache: new InMemoryCache(),
 })
 
