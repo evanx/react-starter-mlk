@@ -1,37 +1,39 @@
-import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
 import React from 'react'
 import ReactDOM from 'react-dom'
 const { Suspense, Fragment, useState } = React
-import { ApolloProvider, Subscription } from 'react-apollo'
+import { ApolloProvider } from 'react-apollo'
 import {
   useQuery,
   useSubscription,
   ApolloProvider as ApolloHooksProvider,
 } from 'react-apollo-hooks'
-import ApolloClient from 'apollo-client'
-import { InMemoryCache } from 'apollo-cache-inmemory'
-import { WebSocketLink } from 'apollo-link-ws'
-import { SchemaLink } from 'apollo-link-schema'
-import { SubscriptionClient } from 'subscriptions-transport-ws'
-import { setContext } from 'apollo-link-context'
+import ApolloClient from 'apollo-boost'
 import './index.css'
 import { classNames } from './utils'
 import environment from './environment'
-import { schema } from './schema'
+// import { schema } from './schema'
 
 const client = new ApolloClient({
-  link: new SchemaLink({ schema }),
-  cache: new InMemoryCache(),
+  uri: '/graphql',
+  clientState: {
+    defaults: {
+      isConnected: true,
+    },
+    resolvers: {
+      Mutation: {
+        updateNetworkStatus: (_, { isConnected }, { cache }) => {
+          cache.writeData({ data: { isConnected } })
+          return null
+        },
+      },
+    },
+  },
 })
 
-const query = gql`
-  {
-    getAppInfo(
-    ) {
-      name
-    }
-  }
+const query = `
+  networkStatus @client {
+    isConnected
+  }  
 `
 
 const start = () =>
