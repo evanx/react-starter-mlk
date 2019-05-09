@@ -8,18 +8,41 @@ import {
   ApolloProvider as ApolloHooksProvider,
 } from 'react-apollo-hooks'
 import ApolloClient from 'apollo-boost'
-import './index.css'
+import gql from 'graphql-tag'
 import { classNames } from './utils'
 import environment from './environment'
+
+import './index.css'
 // import { schema } from './schema'
 
 const client = new ApolloClient({
   uri: '/graphql',
   clientState: {
     defaults: {
-      isConnected: true,
+      uiColorPalette: 'light',
+      networkStatus: {
+        __typename: 'NetworkStatus',
+        isConnected: false,
+      },
     },
+    typeDefs: `
+      type NetworkStatus {
+        isConnected: Boolean!
+      },
+      type Query {
+        uiColorPalette: String
+        networkStatus: NetworkStatus
+      },
+      type Mutation {
+        updateNetworkStatus(isConnected: Boolean!)
+      } 
+    `,
     resolvers: {
+      Query: {
+        getNetworkStatus: (_, { isConnected }, { cache }) => {
+          return { isConnected: true }
+        },
+      },
       Mutation: {
         updateNetworkStatus: (_, { isConnected }, { cache }) => {
           cache.writeData({ data: { isConnected } })
@@ -30,18 +53,16 @@ const client = new ApolloClient({
   },
 })
 
-const query = `
-  networkStatus @client {
-    isConnected
-  }  
-`
+//cache.writeData({ data: { uiColorPalette: 'dark' } })
 
-const start = () =>
-  client
-    .query({
-      query,
-    })
-    .then(result => console.log(result))
+const query = gql`
+  {
+    networkStatus @client {
+      isConnected
+    }
+    uiColorPalette @client
+  }
+`
 
 function App() {
   return (
