@@ -7,7 +7,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "dev": "cross-env NODE_ENV=development parcel index.html ",
-    "build": "cross-env NODE_ENV=production parcel build index.html --no-minify --public-url /"
+    "build": "cross-env NODE_ENV=production parcel build index.html --no-minify --public-url /",
+    "server": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -31,11 +32,14 @@
     "apollo-link-schema": "^1.2.2",
     "apollo-link-state": "^0.4.2",
     "apollo-link-ws": "^1.0.17",
+    "apollo-server-express": "^2.5.0",
     "cross-env": "^5.2.0",
+    "express": "^4.16.4",
     "graphql": "^14.3.0",
     "graphql-iso-date": "^3.6.1",
     "graphql-tag": "^2.10.1",
     "graphql-tools": "^4.0.4",
+    "nodemon": "^1.19.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-apollo": "^2.5.5",

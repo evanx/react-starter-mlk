@@ -32,6 +32,9 @@ const client = new ApolloClient({
       type Query {
         uiColorPalette: String
         networkStatus: NetworkStatus
+        getNetworkStatus() {
+          networkStatus @client
+        }
       },
       type Mutation {
         updateNetworkStatus(isConnected: Boolean!)
@@ -39,7 +42,8 @@ const client = new ApolloClient({
     `,
     resolvers: {
       Query: {
-        getNetworkStatus: (_, { isConnected }, { cache }) => {
+        getNetworkStatus: (_, {}, { cache }) => {
+          console.log('getNetworkStatus')
           return { isConnected: true }
         },
       },
@@ -55,12 +59,20 @@ const client = new ApolloClient({
 
 //cache.writeData({ data: { uiColorPalette: 'dark' } })
 
-const query = gql`
+const query1 = gql`
   {
     networkStatus @client {
       isConnected
     }
     uiColorPalette @client
+  }
+`
+
+const query = gql`
+  query {
+    networkStatus @client {
+      isConnected
+    }
   }
 `
 
